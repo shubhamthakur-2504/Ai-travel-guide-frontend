@@ -51,9 +51,9 @@ export default function Plan() {
         }
         setLoading(true);
         const stageTimer1 = setTimeout(() => setLoadingStage("Sending data to backend"), 100);
-        const stageTimer2 = setTimeout(() => setLoadingStage("Generating AI prompt"), 1200);
+        const stageTimer2 = setTimeout(() => setLoadingStage("Generating AI prompt"), 1600);
         const stageTimer3 = setTimeout(() => setLoadingStage("Creating your perfect itinerary"), 2500);
-        const stageTimer4 = setTimeout(() => setLoadingStage("Finalizing details"), 4000);
+        const stageTimer4 = setTimeout(() => setLoadingStage("Finalizing details"), 5000);
 
         try {
 
@@ -249,9 +249,12 @@ export default function Plan() {
                         className="w-full mt-8 h-14 bg-linear-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white font-semibold text-lg rounded-xl shadow-2xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? (
-                            <div className="flex items-center gap-3">
-                                <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
-                                Generating Your Perfect Trip...
+                            <div className="flex flex-col items-center gap-2">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-5 h-5 pt-1.5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+                                    <span className="pt-1.5">Generating Your Perfect Trip...</span>
+                                </div>
+                                <span className="text-sm text-white/80 pb-2 animate-pulse">{loadingStage}</span>
                             </div>
                         ) : (
                             <div className="flex items-center gap-2">
