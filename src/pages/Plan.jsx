@@ -2,13 +2,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-    Select,
-    SelectTrigger,
-    SelectContent,
-    SelectItem,
-    SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { Plane, MapPin, Calendar, Wallet, Users, Sparkles, Utensils, Heart } from "lucide-react";
 import LocationAutocomplete from "@/components/ui/locationAutoComplete";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +17,7 @@ export default function Plan() {
     const [foodType, setFoodType] = useState("veg");
     const [persons, setPersons] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [loadingStage, setLoadingStage] = useState("");
     const navigate = useNavigate();
 
     const toggleEvent = (type) => {
@@ -45,7 +40,7 @@ export default function Plan() {
         else setEventTypes([]);
     };
 
-    const handleSubmit =  async () => {
+    const handleSubmit = async () => {
         if (!destination) {
             alert("Please enter a destination!");
             return;
@@ -55,9 +50,13 @@ export default function Plan() {
             return;
         }
         setLoading(true);
+        const stageTimer1 = setTimeout(() => setLoadingStage("Sending data to backend"), 100);
+        const stageTimer2 = setTimeout(() => setLoadingStage("Generating AI prompt"), 1200);
+        const stageTimer3 = setTimeout(() => setLoadingStage("Creating your perfect itinerary"), 2500);
+        const stageTimer4 = setTimeout(() => setLoadingStage("Finalizing details"), 4000);
+
         try {
-            console.log(`${import.meta.env.VITE_BACKEND_API_URL}/itinerary`);
-            
+
             const res = await axios.post(
                 `${import.meta.env.VITE_BACKEND_API_URL}/itinerary`,
                 {
@@ -66,17 +65,25 @@ export default function Plan() {
                     lon: destination.lon,
                     days: Number(travelDays),
                     preferences: [
-                        {budget:budget},
-                        {journeyType:journeyType},
-                        {eventTypes:eventTypes},
-                        {foodPreference:foodType},
-                        {numberOfPeople:persons},
+                        { budget: budget },
+                        { journeyType: journeyType },
+                        { eventTypes: eventTypes },
+                        { foodPreference: foodType },
+                        { numberOfPeople: persons },
                     ],
                 }
             );
 
+            clearTimeout(stageTimer1);
+            clearTimeout(stageTimer2);
+            clearTimeout(stageTimer3);
+            clearTimeout(stageTimer4);
             navigate("/result", { state: { itinerary: res.data } });
         } catch (err) {
+            clearTimeout(stageTimer1);
+            clearTimeout(stageTimer2);
+            clearTimeout(stageTimer3);
+            clearTimeout(stageTimer4);
             console.error(err);
             alert("Failed to fetch itinerary");
         } finally {
