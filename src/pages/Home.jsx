@@ -49,7 +49,7 @@ export default function Home() {
             >
                 <Button
                     size="lg"
-                    className="bg-[#AD49E1] hover:bg-[#EBD3F8] hover:text-[#2E073F] text-lg font-semibold px-8 py-6 rounded-2xl shadow-lg transition"
+                    className="bg-[#AD49E1] hover:bg-[#EBD3F8] hover:text-[#a735d7] text-lg font-semibold px-8 py-6 rounded-2xl shadow-lg transition"
                     onClick={() => navigate("/plan")}
                 >
                     Get Started 🚀

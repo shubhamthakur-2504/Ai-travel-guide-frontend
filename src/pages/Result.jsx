@@ -6,6 +6,7 @@ import { ArrowLeft, Sun, Cloud, CloudRain, Sunrise, Sunset, Calendar, Coffee, Mo
 export default function Result() {
   const location = useLocation();
   const navigate = useNavigate();
+  if (!location.state) navigate("/");
   const data = location.state?.itinerary;
 
   if (!data) {
@@ -41,7 +42,7 @@ export default function Result() {
           <Button
             onClick={() => navigate("/")}
             variant="ghost"
-            className="text-white hover:bg-white/10 mb-4"
+            className="text-white hover:bg-white/10 hover:text-[#a735d7] mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Plan
